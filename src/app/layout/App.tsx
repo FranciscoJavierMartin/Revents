@@ -1,5 +1,5 @@
 import { Container } from 'semantic-ui-react';
-import EventDashboard from '../../features/events/dashboard/EventDashboard';
+import EventDashboard from '@/features/events/dashboard/EventDashboard';
 
 function App() {
   return (
