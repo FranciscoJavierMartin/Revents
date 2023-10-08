@@ -1,5 +1,14 @@
+import { Container } from 'semantic-ui-react';
+import EventDashboard from '../../features/events/dashboard/EventDashboard';
+
 function App() {
-  return <h1>Hello world</h1>;
+  return (
+    <>
+      <Container className='main'>
+        <EventDashboard />
+      </Container>
+    </>
+  );
 }
 
 export default App;
