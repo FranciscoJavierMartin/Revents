@@ -1,11 +1,13 @@
+import { AppEvent } from '@/app/types/event';
 import { ChangeEvent, Dispatch, useState } from 'react';
 import { Button, Form, Header, Segment } from 'semantic-ui-react';
 
 type EventFormProps = {
   setIsFormOpen: Dispatch<React.SetStateAction<boolean>>;
+  addEvent: (event: AppEvent) => void;
 };
 
-export default function EventForm({ setIsFormOpen }: EventFormProps) {
+export default function EventForm({ setIsFormOpen, addEvent }: EventFormProps) {
   const initialValues = {
     title: '',
     category: '',
@@ -21,7 +23,15 @@ export default function EventForm({ setIsFormOpen }: EventFormProps) {
     setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
-  function onSubmit(): void {}
+  function onSubmit(): void {
+    addEvent({
+      ...values,
+      attendees: [],
+      hostedBy: '',
+      hostPhotoURL: '',
+      id: Math.random().toString(),
+    });
+  }
 
   return (
     <Segment clearing>

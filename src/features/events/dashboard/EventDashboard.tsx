@@ -20,13 +20,20 @@ export default function EventDashboard({
     setEvents(sampleData);
   }, []);
 
+  function addEvent(event: AppEvent): void {
+    setEvents((prev) => [...prev, event]);
+    setIsFormOpen(false);
+  }
+
   return (
     <Grid>
       <Grid.Column width={10}>
         <EventList events={events} />
       </Grid.Column>
       <Grid.Column width={6}>
-        {isFormOpen && <EventForm setIsFormOpen={setIsFormOpen} />}
+        {isFormOpen && (
+          <EventForm setIsFormOpen={setIsFormOpen} addEvent={addEvent} />
+        )}
       </Grid.Column>
     </Grid>
   );
