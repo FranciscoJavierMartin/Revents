@@ -12,15 +12,25 @@ import { AppEvent, Attendee } from '@/app/types/event';
 
 type EventListItemProps = {
   event: AppEvent;
+  selectEvent: (event: AppEvent) => void;
+  deleteEvent: (eventId: string) => void;
 };
 
-export default function EventListItem({ event }: EventListItemProps) {
+export default function EventListItem({
+  event,
+  selectEvent,
+  deleteEvent,
+}: EventListItemProps) {
   return (
     <SegmentGroup>
       <Segment>
         <ItemGroup>
           <Item>
-            <Item.Image size='tiny' circular src={event.hostPhotoURL} />
+            <Item.Image
+              size='tiny'
+              circular
+              src={event.hostPhotoURL || '/user.png'}
+            />
             <Item.Content>
               <Item.Header>{event.title}</Item.Header>
               <Item.Description>Hosted by {event.hostedBy}</Item.Description>
@@ -43,7 +53,18 @@ export default function EventListItem({ event }: EventListItemProps) {
       </Segment>
       <Segment clearing>
         <span>{event.description}</span>
-        <Button color='teal' floated='right' content='View' />
+        <Button
+          color='red'
+          floated='right'
+          content='Delete'
+          onClick={() => deleteEvent(event.id)}
+        />
+        <Button
+          color='teal'
+          floated='right'
+          content='View'
+          onClick={() => selectEvent(event)}
+        />
       </Segment>
     </SegmentGroup>
   );

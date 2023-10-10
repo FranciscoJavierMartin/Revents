@@ -5,10 +5,17 @@ import { Button, Form, Header, Segment } from 'semantic-ui-react';
 type EventFormProps = {
   setIsFormOpen: Dispatch<React.SetStateAction<boolean>>;
   addEvent: (event: AppEvent) => void;
+  selectedEvent: AppEvent | null;
+  updateEvent: (event: AppEvent) => void;
 };
 
-export default function EventForm({ setIsFormOpen, addEvent }: EventFormProps) {
-  const initialValues = {
+export default function EventForm({
+  setIsFormOpen,
+  addEvent,
+  selectedEvent,
+  updateEvent,
+}: EventFormProps) {
+  const initialValues = selectedEvent ?? {
     title: '',
     category: '',
     description: '',
@@ -24,18 +31,22 @@ export default function EventForm({ setIsFormOpen, addEvent }: EventFormProps) {
   }
 
   function onSubmit(): void {
-    addEvent({
-      ...values,
-      attendees: [],
-      hostedBy: '',
-      hostPhotoURL: '',
-      id: Math.random().toString(),
-    });
+    if (selectedEvent) {
+      updateEvent({ ...selectedEvent, ...values });
+    } else {
+      addEvent({
+        ...values,
+        attendees: [],
+        hostedBy: 'Bob',
+        hostPhotoURL: '',
+        id: Math.random().toString(),
+      });
+    }
   }
 
   return (
     <Segment clearing>
-      <Header content='Create event' />
+      <Header content={selectedEvent ? 'Update event' : 'Create event'} />
       <Form onSubmit={onSubmit}>
         <Form.Field>
           <input

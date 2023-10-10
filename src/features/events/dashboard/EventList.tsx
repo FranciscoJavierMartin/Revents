@@ -3,13 +3,24 @@ import EventListItem from '@/features/events/dashboard/EventListItem';
 
 type EventListProps = {
   events: AppEvent[];
+  selectEvent: (event: AppEvent) => void;
+  deleteEvent: (eventId: string) => void;
 };
 
-export default function EventList(props: EventListProps) {
+export default function EventList({
+  events,
+  selectEvent,
+  deleteEvent,
+}: EventListProps) {
   return (
     <>
-      {props.events.map((event: AppEvent) => (
-        <EventListItem key={event.id} event={event} />
+      {events.map((event: AppEvent) => (
+        <EventListItem
+          key={event.id}
+          event={event}
+          selectEvent={selectEvent}
+          deleteEvent={deleteEvent}
+        />
       ))}
     </>
   );
